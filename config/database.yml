@@ -11,15 +11,13 @@
 #
 #
 #
-# Noob's guide to setting up some local development love with pg:
+# Guide to setting up some local development love with pg:
 #
-#   psql template1
-#   create database ssejumble_development;
-#   create database ssejumble_production;
-#   create user ssejumble with password '';
-#   grant all privileges on database ssejumble_development to ssejumble;
-#   grant all privileges on database ssejumble_production to ssejumble;
-#   alter user ssejumble createdb;
+#   $ psql template1
+#   => create user ssejumble with password '';
+#   => alter user ssejumble createdb;
+#   $ rake db:create
+#   $ RAILS_ENV=production rake db:create   # if you want to run with production settings
 #
 #
 #
