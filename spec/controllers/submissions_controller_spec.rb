@@ -24,7 +24,7 @@ describe SubmissionsController do
   # Submission. As you add validations to Submission, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    attributes_for(:submission, :word => create(:word), :people => [create(:person), create(:person, :first_name => 'Jack'), create(:person, :first_name => 'Jane')])
+    attributes_for(:submission)
   end
 
   describe "GET index" do
