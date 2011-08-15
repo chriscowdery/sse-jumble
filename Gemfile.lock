@@ -184,8 +184,8 @@ PLATFORMS
 DEPENDENCIES
   capybara
   cucumber-rails
-  omniauth (~> 0.2.0)
+  omniauth (>= 0.2.6)
   pg
   rails (= 3.0.9)
-  rspec-rails (>= 2.0.1)
+  rspec-rails (>= 2.6.1)
   unicorn
