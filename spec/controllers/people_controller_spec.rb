@@ -24,7 +24,7 @@ describe PeopleController do
   # Person. As you add validations to Person, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    attributes_for :person
   end
 
   describe "GET index" do
