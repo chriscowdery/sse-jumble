@@ -8,6 +8,22 @@
 #   gem install pg
 #       Choose the win32 build.
 #       Install PostgreSQL and put its /bin directory on your path.
+#
+#
+#
+# Noob's guide to setting up some local development love with pg:
+#
+#   psql template1
+#   create database ssejumble_development;
+#   create database ssejumble_production;
+#   create database ssejumble_test;
+#   create user ssejumble with password '';
+#   grant all privileges on database ssejumble_development to ssejumble;
+#   grant all privileges on database ssejumble_production to ssejumble;
+#   grant all privileges on database ssejumble_test to ssejumble;
+#
+#
+#
 development:
   adapter: postgresql
   encoding: unicode
