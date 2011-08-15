@@ -18,6 +18,7 @@ gem 'omniauth', '>=0.2.6'
 
 # Testing
 gem 'rspec-rails', '>= 2.6.1', :group => [:development, :test]
+gem 'factory_girl_rails', :group => [:development, :test]
 gem 'cucumber-rails', :group => [:development, :test]
 gem 'capybara', :group => [:development, :test]
 
