@@ -23,7 +23,8 @@ if Person.all.length == 0
     # 8 points: J ×1, X ×1
     # 10 points: Q ×1, Z ×1
 
-    letter = 'a' # temporary
+    letters = 'abcdefghijklmnopqrstuvwxyz'
+    letter = letters[Random.rand(26)] # temporary
 
     Person.create(:first_name => first_name, :last_name => last_name, :letter => letter)
   end
