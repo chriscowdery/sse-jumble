@@ -16,11 +16,10 @@
 #   psql template1
 #   create database ssejumble_development;
 #   create database ssejumble_production;
-#   create database ssejumble_test;
 #   create user ssejumble with password '';
 #   grant all privileges on database ssejumble_development to ssejumble;
 #   grant all privileges on database ssejumble_production to ssejumble;
-#   grant all privileges on database ssejumble_test to ssejumble;
+#   alter user ssejumble createdb;
 #
 #
 #
