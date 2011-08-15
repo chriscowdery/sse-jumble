@@ -1,4 +1,8 @@
 SseJumble::Application.routes.draw do
+  resources :submissions
+
+  resources :people
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
