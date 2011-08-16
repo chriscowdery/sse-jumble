@@ -6,7 +6,7 @@ class Submission < ActiveRecord::Base
   validates_uniqueness_of :magic_string
 
   before_validation :set_word_and_people
-  after_save :validate_group_trickery
+  after_save :validate_no_group_trickery
 
 private
 
@@ -23,7 +23,7 @@ private
     self.people = temp_people
   end
 
-  def validate_group_trickery
+  def validate_no_group_trickery
     submissions = Submission.where(:word_id => self.word_id)
     submissions.each do |s|
       if s.people.sort_by { |p| p.id } == self.people.sort_by { |p| p.id }
