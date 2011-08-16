@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe Word do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "should just work" do
+    word = build(:word)
+    word.should be_valid
+
+    word.save.should be_true
+  end
 end

@@ -7,10 +7,19 @@ describe Submission do
     @a = create(:person, :letter => 'a')
     @h = create(:person, :letter => 'h')
 
+    @people = [@b, @l, @a, @h]
+
     @word1 = create(:word, :word => 'blah')
-    @word2 = create(:word, :word => 'blahblah')
-    @word3 = create(:word, :word => 'blahblahblah')
   end
 
+  it "should accept valid words" do
+    sub = build(:submission, :magic_string => nil)
+    sub.magic_string = @people.inject("") { |memo,obj| memo + ("%02d" % obj.id) }
+    sub.save!
+    sub.should be_valid
+  end
 
+  it "should have a people association" do
+    sub = create(:submission)
+  end
 end

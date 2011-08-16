@@ -1,6 +1,9 @@
 FactoryGirl.define do
   factory :submission do
-    word
-    people { |people| [people.association(:person)] } # for habtm people => submissions relationship
+    sequence(:magic_string) do |n|
+      person_list = FactoryGirl.create_list(:person, 4)
+      FactoryGirl.create(:word, :word => (person_list.inject("") { |memo,obj| memo + obj.letter }))
+      person_list.inject("") { |memo,obj| memo + ("%02d" % obj.id) }
+    end
   end
 end

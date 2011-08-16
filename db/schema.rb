@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110815075225) do
+ActiveRecord::Schema.define(:version => 20110816074129) do
 
   create_table "people", :force => true do |t|
     t.string   "first_name"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20110815075225) do
     t.integer  "word_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "magic_string"
   end
 
   create_table "words", :force => true do |t|
