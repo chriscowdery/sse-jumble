@@ -27,6 +27,7 @@ private
     submissions = Submission.where(:word_id => self.word_id)
     submissions.each do |s|
       if s.people.sort_by { |p| p.id } == self.people.sort_by { |p| p.id }
+        self.errors[:base] << "Word has already been submitted by this group."
         raise ActiveRecord::Rollback, "Group has already submitted this word!"
       end
     end
