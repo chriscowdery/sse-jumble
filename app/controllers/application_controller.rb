@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 protected
 
   def current_user
-    @current_user ||= AllowedUsers.find_by_id(session[:user_id])
+    @current_user ||= AllowedUser.find_by_id(session[:user_id])
   end
 
   def signed_in?

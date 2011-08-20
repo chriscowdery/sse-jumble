@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def callback
     username = auth["extra"][:uid].first
-    user = AllowedUsers.find_by_username username
+    user = AllowedUser.find_by_username username
 
     unless user.nil?
       # Log the authorizing user in.
