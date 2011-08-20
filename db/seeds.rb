@@ -9,25 +9,6 @@
 
 require File.join(Rails.root, 'db/letters.rb')
 
-def letter_score(letter)
-  case letter
-  when 'e', 'a', 'i', 'o', 'n', 'r', 't', 'l', 's', 'u'
-    1
-  when 'd', 'g'
-    2
-  when 'b', 'c', 'm', 'p'
-    3
-  when 'f', 'h', 'v', 'w', 'y'
-    4
-  when 'k'
-    5
-  when 'j', 'x'
-    8
-  when 'q', 'z'
-    10
-  end
-end
-
 if Letter.count == 0
   letters = 'abcdefghijklmnopqrstuvwxyz'
 

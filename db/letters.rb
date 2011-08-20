@@ -9,32 +9,32 @@ FUDGE_FACTOR = 1
 
 def get_letter_array(person_count)
   letter_freqs = []
-  letter_freqs << ['E', 12]
-  letter_freqs << ['A', 9]
-  letter_freqs << ['I', 9]
-  letter_freqs << ['O', 8]
-  letter_freqs << ['N', 6]
-  letter_freqs << ['R', 6]
-  letter_freqs << ['T', 6]
-  letter_freqs << ['L', 4]
-  letter_freqs << ['S', 4]
-  letter_freqs << ['U', 4]
-  letter_freqs << ['D', 4]
-  letter_freqs << ['G', 3]
-  letter_freqs << ['B', 2]
-  letter_freqs << ['C', 2]
-  letter_freqs << ['M', 2]
-  letter_freqs << ['P', 2]
-  letter_freqs << ['F', 2]
-  letter_freqs << ['H', 2]
-  letter_freqs << ['V', 2]
-  letter_freqs << ['W', 2]
-  letter_freqs << ['Y', 2]
-  letter_freqs << ['K', 1]
-  letter_freqs << ['J', 1]
-  letter_freqs << ['X', 1]
-  letter_freqs << ['Q', 1]
-  letter_freqs << ['Z', 1]
+  letter_freqs << ['e', 12]
+  letter_freqs << ['a', 9]
+  letter_freqs << ['i', 9]
+  letter_freqs << ['o', 8]
+  letter_freqs << ['n', 6]
+  letter_freqs << ['r', 6]
+  letter_freqs << ['t', 6]
+  letter_freqs << ['l', 4]
+  letter_freqs << ['s', 4]
+  letter_freqs << ['u', 4]
+  letter_freqs << ['d', 4]
+  letter_freqs << ['g', 3]
+  letter_freqs << ['b', 2]
+  letter_freqs << ['c', 2]
+  letter_freqs << ['m', 2]
+  letter_freqs << ['p', 2]
+  letter_freqs << ['f', 2]
+  letter_freqs << ['h', 2]
+  letter_freqs << ['v', 2]
+  letter_freqs << ['w', 2]
+  letter_freqs << ['y', 2]
+  letter_freqs << ['k', 1]
+  letter_freqs << ['j', 1]
+  letter_freqs << ['x', 1]
+  letter_freqs << ['q', 1]
+  letter_freqs << ['z', 1]
   
   scrabble_count = 100
   
@@ -55,33 +55,58 @@ def get_letter_array(person_count)
   letter_array.shuffle!
 end
 
+def letter_score(letter)
+  case letter
+  when 'e', 'a', 'i', 'o', 'n', 'r', 't', 'l', 's', 'u'
+    1
+  when 'd', 'g'
+    2
+  when 'b', 'c', 'm', 'p'
+    3
+  when 'f', 'h', 'v', 'w', 'y'
+    4
+  when 'k'
+    5
+  when 'j', 'x'
+    8
+  when 'q', 'z'
+    10
+  end
+end
+
 
 def simple_info()
   require 'pp'
   a = get_letter_array(80)
-  ("A".."Z").each{|i|
+  ("a".."z").each{|i|
     puts i + ": " + a.count(i).to_s
   }
   puts a.size
   
   num = 0
+  tot_score = 0
   words = File.new("../words.txt")
   words.each do |line|
     line.strip!
-    line.upcase!
+    line.downcase!
     word = line
     line = line.split(//)
     good = true
-    ("A".."Z").each{|i|
+    score = 0
+    ("a".."z").each{|i|
       if a.count(i) < line.count(i)
         good = false
         break
+      else
+        score += (letter_score(i) * line.count(i))
       end
     }
     
+    tot_score += score if good
     num += 1 if good
-    puts word + ": " + num.to_s if good
+    puts word + ": " + score.to_s if good
     
   end
-  puts num
+  puts "Total Words: "  + num.to_s
+  puts "Total Score: "  + tot_score.to_s
 end
