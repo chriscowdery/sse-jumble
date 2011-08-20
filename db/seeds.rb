@@ -6,7 +6,7 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-def score(letter)
+def letter_score(letter)
   case letter
   when 'e', 'a', 'i', 'o', 'n', 'r', 't', 'l', 's', 'u'
     1
@@ -29,13 +29,15 @@ if Letter.all.length == 0
   letters = 'abcdefghijklmnopqrstuvwxyz'
 
   letters.chars.each do |c|
-    Letter.create(:letter => c, :score => score(c))
+    Letter.create(:letter => c, :score => letter_score(c))
   end
 end
 
 if Person.all.length == 0
   names = File.new(File.join(Rails.root, "names.txt"))
   names.each do |line|
+    line.strip!
+
     first_name = line.match(/, (.+)/).captures[0]
     last_name = line.match(/(.+),/).captures[0]
 
@@ -60,7 +62,10 @@ end
 if Word.all.length == 0
   words = File.new(File.join(Rails.root, "words.txt"))
   words.each do |line|
+    line.strip!
+
     next if line.length < 3
+
     score = line.chars.inject(0) { |memo,c| memo + Letter.find_by_letter(c).score }
     Word.create(:word => line, :score => score)
   end
