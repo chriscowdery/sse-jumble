@@ -25,7 +25,7 @@ def letter_score(letter)
   end
 end
 
-if Letter.all.length == 0
+if Letter.count == 0
   letters = 'abcdefghijklmnopqrstuvwxyz'
 
   letters.chars.each do |c|
@@ -33,7 +33,7 @@ if Letter.all.length == 0
   end
 end
 
-if Person.all.length == 0
+if Person.count == 0
   names = File.new(File.join(Rails.root, "names.txt"))
   names.each do |line|
     line.strip!
@@ -59,7 +59,7 @@ if Person.all.length == 0
   end
 end
 
-if Word.all.length == 0
+if Word.count == 0
   words = File.new(File.join(Rails.root, "words.txt"))
   words.each do |line|
     line.strip!
@@ -69,5 +69,13 @@ if Word.all.length == 0
     score = line.chars.inject(0) { |memo,c| memo + Letter.find_by_letter(c).score }
     Word.create(:word => line, :score => score)
   end
+end
+
+if AllowedUser.count == 0
+  AllowedUser.create([
+    { :username => 'cjk7752' },
+    { :username => 'cjc5976' },
+    { :username => 'cxb3490' }
+  ])
 end
 
