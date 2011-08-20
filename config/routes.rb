@@ -1,4 +1,6 @@
 SseJumble::Application.routes.draw do
+  get "diagnostics/index"
+
   resources :submissions
 
   resources :people
