@@ -60,7 +60,9 @@ end
 if Word.all.length == 0
   words = File.new(File.join(Rails.root, "words.txt"))
   words.each do |line|
-    Word.create(:word => line) if line.length >= 3 # min word length of 3
+    next if line.length < 3
+    score = line.chars.inject(0) { |memo,c| memo + Letter.find_by_letter(c).score }
+    Word.create(:word => line, :score => score)
   end
 end
 

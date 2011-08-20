@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110820094748) do
+ActiveRecord::Schema.define(:version => 20110820095227) do
 
   create_table "letters", :force => true do |t|
     t.string   "letter"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20110820094748) do
     t.string   "word"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "score"
   end
 
 end
