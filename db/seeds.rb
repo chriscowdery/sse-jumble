@@ -6,6 +6,9 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
+
+require File.join(Rails.root, 'db/letters.rb')
+
 def letter_score(letter)
   case letter
   when 'e', 'a', 'i', 'o', 'n', 'r', 't', 'l', 's', 'u'
@@ -35,6 +38,9 @@ end
 
 if Person.count == 0
   names = File.new(File.join(Rails.root, "names.txt"))
+  names_count = File.new(File.join(Rails.root, "names.txt"))
+  letters = get_letter_array(names_count.readline.size)
+
   names.each do |line|
     line.strip!
 
@@ -51,9 +57,8 @@ if Person.count == 0
     # 5 points: K ×1
     # 8 points: J ×1, X ×1
     # 10 points: Q ×1, Z ×1
-
-    letters = 'abcdefghijklmnopqrstuvwxyz'
-    letter = letters[Random.rand(26)] # temporary
+    
+    letter = letters.pop()
 
     Person.create(:first_name => first_name, :last_name => last_name, :letter => letter)
   end
