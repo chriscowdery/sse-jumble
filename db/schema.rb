@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110820092539) do
+ActiveRecord::Schema.define(:version => 20110820094748) do
 
   create_table "letters", :force => true do |t|
     t.string   "letter"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(:version => 20110820092539) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "magic_string"
-    t.integer  "score"
   end
 
   create_table "words", :force => true do |t|

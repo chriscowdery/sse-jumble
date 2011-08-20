@@ -2,7 +2,7 @@ class Submission < ActiveRecord::Base
   belongs_to :word
   has_and_belongs_to_many :people
 
-  validates_presence_of :magic_string, :word_id, :score
+  validates_presence_of :magic_string, :word_id
   validates_uniqueness_of :magic_string
 
   before_validation :set_word_and_people
