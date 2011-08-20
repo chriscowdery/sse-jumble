@@ -25,4 +25,10 @@ class SessionsController < ApplicationController
   def sign_out
     sign_out!
   end
+
+protected
+
+  def authorize!
+  end
+
 end
