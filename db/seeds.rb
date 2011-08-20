@@ -6,6 +6,33 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
+def score(letter)
+  case letter
+  when 'e', 'a', 'i', 'o', 'n', 'r', 't', 'l', 's', 'u'
+    1
+  when 'd', 'g'
+    2
+  when 'b', 'c', 'm', 'p'
+    3
+  when 'f', 'h', 'v', 'w', 'y'
+    4
+  when 'k'
+    5
+  when 'j', 'x'
+    8
+  when 'q', 'z'
+    10
+  end
+end
+
+if Letter.all.length == 0
+  letters = 'abcdefghijklmnopqrstuvwxyz'
+
+  letters.chars.each do |c|
+    Letter.create(:letter => c, :score => score(c))
+  end
+end
+
 if Person.all.length == 0
   names = File.new(File.join(Rails.root, "names.txt"))
   names.each do |line|
