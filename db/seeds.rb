@@ -6,7 +6,6 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-
 require File.join(Rails.root, 'db/letters.rb')
 
 if Letter.count == 0
@@ -38,7 +37,7 @@ if Person.count == 0
     # 5 points: K ×1
     # 8 points: J ×1, X ×1
     # 10 points: Q ×1, Z ×1
-    
+
     letter = letters.pop()
 
     Person.create(:first_name => first_name, :last_name => last_name, :letter => letter)
