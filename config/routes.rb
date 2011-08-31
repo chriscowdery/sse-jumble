@@ -1,4 +1,6 @@
 SseJumble::Application.routes.draw do
+  get "scoreboard/index"
+
   get "diagnostics/index"
 
   resources :submissions
