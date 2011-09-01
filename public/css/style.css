@@ -1,0 +1,108 @@
+/* Body Data */
+body{
+	background-image: url('../assets/gray-hash.png');
+}
+
+/* Font Data */
+@font-face {
+	font-family: Nevis;
+	src: url('../assets/nevis.ttf');
+}
+
+/* Header */
+#header{
+	width:85%;
+	margin:0px auto;
+	background-color:#1E77BD;
+	text-align:center;
+	margin-bottom:10px;
+
+	-moz-border-radius:0px 0px 30px 30px;
+	-webkit-border-radius:0px 0px 30px 30px;
+	border-radius:0px 0px 30px 30px;
+	-moz-box-shadow:0px 7px 10px #000000;
+	-webkit-box-shadow:7px 5px 10px #000000;
+	box-shadow:0px 7px 10px #000000;
+
+}
+
+#logo, #title{
+	display:inline-block;
+}
+
+#logo{
+}
+
+#title{
+	font-size:130px;
+	font-family: Nevis;
+	letter-spacing:90%;
+	padding-left:20px;
+	color:white;
+}
+
+#header img{
+	height:100px;
+	vertical-align:text-bottom;
+}
+
+
+/* Score Section */
+#scores{
+	font-family: Helvetica;
+	margin:0px auto;
+	font-size:70px;
+	text-align:left;
+	line-height:105px;
+	width:100%;
+	overflow:none;	
+}
+
+.who, .number{
+	 text-shadow: rgba(255,255,255,0.5) 0px 1px 1px;
+}
+
+.number{
+	float:right;
+	padding-right:10px;
+}
+
+.person{
+	padding-top: 20px;
+	-webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+
+}
+
+.who{
+	z-index:100;
+	padding-left:10px;
+	display:inline-block;
+}
+
+.clear{ clear:both }
+
+.person_slot{
+	padding-top:2px;
+	height:120px;
+	overflow:hidden;
+	}
+
+div .hidden{
+  -webkit-transform: translate(-110%,0);
+  -moz-transform:    translate(-110%,0);
+  -o-transform:      translate(-110%,0);
+}
+
+.bar{
+	width:0%;
+	background-color:#28A2FF;
+	float:left;
+	height:110px;
+	z-index:-100;
+	position:absolute;
+	-moz-box-shadow:inset 0px 0px 2px 2px #000000;
+	-webkit-box-shadow:inset 0px 0px 2px 2px #000000;
+	box-shadow:inset 0px 0px 2px 2px #000000;
+}
