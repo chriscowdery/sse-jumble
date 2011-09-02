@@ -18,9 +18,11 @@ class ScoreboardController < ApplicationController
       person_hash['score'] = person.score
       scores << person_hash
     end
-    
+
+    logger.debug "*** scores: #{scores} ***"
+
     scores = scores.sort do |a,b|
-      a['score'] <=> b['score']
+      b['score'] <=> a['score']
     end
 
     scores[0,7]

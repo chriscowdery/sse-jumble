@@ -1,10 +1,11 @@
 SseJumble::Application.routes.draw do
 
-  get "scoreboard/index"
   get "diagnostics/index"
 
-  resources :submissions
+  match '/scoreboard', :to => 'scoreboard#index'
+  match '/scoreboard/index', :to => 'scoreboard#index'
 
+  resources :submissions
   resources :people
 
   # omniauth routes
