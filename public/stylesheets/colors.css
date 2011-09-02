@@ -1,0 +1,21 @@
+label.missing
+{
+	color:#FF0000;
+	font-weight:bold;
+}
+
+.center-wrapper
+{
+	text-align: center;
+}
+
+.center-wrapper *
+{
+	margin: 0 auto;
+}
+
+#confirmation
+{
+	font-weight: bold;
+	color: #00a900;
+}

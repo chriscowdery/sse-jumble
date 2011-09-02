@@ -40,15 +40,18 @@ class SubmissionsController < ApplicationController
   # POST /submissions
   # POST /submissions.json
   def create
-    @submission = Submission.new(params[:submission])
+    @submission = Submission.new
+    @submission.magic_string = params[:participants]
 
     respond_to do |format|
       if @submission.save
-        format.html { redirect_to(@submission, :notice => 'Submission was successfully created.') }
-        format.js  { render :json => @submission, :status => :created, :location => @submission }
+        # format.html { redirect_to(@submission, :notice => 'Submission was successfully created.') }
+        # format.js  { render :json => @submission, :status => :created, :location => @submission }
+        render :text => "Valid", :status => 200
       else
-        format.html { render :action => "new" }
-        format.js  { render :json => @submission.errors, :status => :unprocessable_entity }
+        # format.html { render :action => "new" }
+        # format.js  { render :json => @submission.errors, :status => :unprocessable_entity }
+        render :text => "Invalid", :status => 500
       end
     end
   end

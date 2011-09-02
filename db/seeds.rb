@@ -14,16 +14,26 @@ if Letter.count == 0
   letters.chars.each do |c|
     Letter.create(:letter => c, :score => letter_score(c))
   end
+
+  puts "#{Letter.count} letters seeded into DB"
 end
 
 if Person.count == 0
   names = File.new(File.join(Rails.root, "names.txt"))
-  names_count = File.new(File.join(Rails.root, "names.txt"))
-  letters = get_letter_array(names_count.readline.size)
+  lines = []
 
+  linecount = 0
   names.each do |line|
     line.strip!
+    unless line == ""
+      lines << line
+      linecount += 1
+    end
+  end
 
+  letters = get_letter_array(linecount)
+
+  lines.each do |line|
     first_name = line.match(/, (.+)/).captures[0]
     last_name = line.match(/(.+),/).captures[0]
 
@@ -40,8 +50,10 @@ if Person.count == 0
 
     letter = letters.pop()
 
-    Person.create(:first_name => first_name, :last_name => last_name, :letter => letter)
+    p = Person.create(:first_name => first_name, :last_name => last_name, :letter => letter)
   end
+
+  puts "#{Person.count} people seeded into DB"
 end
 
 if Word.count == 0
@@ -54,6 +66,8 @@ if Word.count == 0
     score = line.chars.inject(0) { |memo,c| memo + Letter.find_by_letter(c).score }
     Word.create(:word => line, :score => score)
   end
+
+  puts "#{Word.count} words seeded into DB"
 end
 
 if AllowedUser.count == 0
@@ -62,5 +76,7 @@ if AllowedUser.count == 0
     { :username => 'cjc5976' },
     { :username => 'cxb3490' }
   ])
+
+  puts "#{AllowedUser.count} allowed users seeded into DB"
 end
 

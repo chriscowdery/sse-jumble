@@ -1,4 +1,208 @@
-<h1>Root#index</h1>
-<p>Find me in app/views/root/index.html.erb</p>
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Submit a Word</title> 
 
-<%= link_to "Sign out", sign_out_path %>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
+	<link rel="stylesheet" href="/stylesheets/colors.css">
+  <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
+  
+	<script>	 
+	 // Global declarations - assignments made in $(document).ready() below
+    var hdrMainvar = null;
+    var contentMainVar = null;
+    var ftrMainVar = null;
+    var contentTransitionVar = null;
+    var form1var = null;
+    var confirmationVar = null;
+    var contentDialogVar = null;
+    var hdrConfirmationVar = null; 
+    var contentConfirmationVar = null;
+    var ftrConfirmationVar = null;
+    var inputMapVar = null;
+    
+    // Constants
+    var MISSING = "missing";
+    var EMPTY = "";
+	</script>
+
+</head> 
+<body> 
+
+<!-- Page starts here -->
+<div data-role="page" data-theme="b" id="page1">
+
+	<div data-role="header" id="hdrMain" name="hdrMain" data-nobackbtn="true">
+		<h1>Submit a Word</h1>
+		<!-- <a href="howto.php" data-rel="dialog" data-icon="star" data-transition="slide">Help</a> -->
+	</div>
+
+	<div data-role="content" id="contentMain" name="contentMain">	
+	
+
+    <%= form_tag "/submissions", :remote => true, :id => "form1" do %>
+
+      <div id="idDiv" data-role="fieldcontain">
+        <label for="participants">Participant IDs:*</label>		
+        <input id="participants" name="participants" type="tel" />
+      </div>
+
+      <div id="submitDiv" data-role="fieldcontain">    
+        <div align="center">
+          <%= submit_tag "Submit Word" %> <br />
+        </div>
+      </div>
+
+    <% end %>
+
+	</div><!-- contentMain -->
+  
+	<div data-role="footer" id="ftrMain" name="ftrMain"></div>
+	
+  <div align="center" data-role="content" id="contentDialog" name="contentDialog">	
+	 <div>Please fill in the IDs before submitting the form.</div>
+	 <a id="buttonOK" name="buttonOK" href="#page1" data-role="button" data-inline="true">OK</a>
+	</div>	<!-- contentDialog -->
+	
+  <!-- contentTransition is displayed after the form is submitted until a response is received back. -->
+	<div data-role="content" id="contentTransition" name="contentTransition">	
+	 <div align="center"><h4>Submitting word...</h4></div>
+	 <div align="center"><img id="spin" name="spin" src="/images/3-1.gif"/></div>
+	</div>	<!-- contentTransition -->
+	
+	<!-- Although stored within page1 div tag, hdrConfirmation, contentConfirmation and ftrConfirmation represent a self contained 'confirmation page' -->
+	<div data-role="header"  id="hdrConfirmation" name="hdrConfirmation" data-nobackbtn="true">
+		<h1>Word submitted!</h1>
+	</div>
+	
+	<div data-role="content" id="contentConfirmation" name="contentConfirmation" align="center">	
+  	<p>The word <span id="confirmation" name="confirmation"></span> has been submitted to the SSE Jumble server successfully.</p>
+  	<a id="buttonBack" name="buttonBack" href="#page1" data-role="button" data-inline="true">Cool!</a>
+	</div><!-- contentConfirmation -->	
+  	
+	<div data-role="footer" id="ftrConfirmation" name="ftrConfirmation"></div> 
+	
+	
+	<script>
+	 
+    $(document).ready(function() {
+    // Assign global variables
+      hdrMainVar = $('#hdrMain');
+      contentMainVar = $('#contentMain');
+      ftrMainVar = $('#ftrMain');
+      contentTransitionVar = $('#contentTransition');
+      form1Var = $('#form1');
+      confirmationVar = $('#confirmation');
+      contentDialogVar = $('#contentDialog');
+      hdrConfirmationVar = $('#hdrConfirmation');
+      contentConfirmationVar = $('#contentConfirmation');
+      ftrConfirmationVar = $('#ftrConfirmation'); 
+      inputMapVar = $('input[name*="_r"]');
+      
+      hideContentDialog();
+      hideContentTransition();
+      hideConfirmation();
+    }); 
+	
+	  $('#buttonOK').click(function() {
+      hideContentDialog();
+      showMain();
+      return false;      
+    });
+    
+    $('#buttonBack').click(function() {
+      hideContentDialog();
+      hideContentTransition();
+      hideConfirmation();
+      $("#participants").val("");
+      showMain();
+      return false;      
+    });
+   
+    
+    $('#form1').submit(function() {
+        var err = false;
+        // Hide the Main content
+        hideMain();
+        
+        // Reset the previously highlighted form elements
+        inputMapVar.each(function(index){              
+          $(this).prev().removeClass(MISSING); 
+        });
+        
+        // Perform form validation
+        inputMapVar.each(function(index){  
+        if($(this).val()==null || $(this).val()==EMPTY){  
+            $(this).prev().addClass(MISSING);            
+            err = true;
+          }          
+        });   
+                
+        // If validation fails, show Dialog content
+        if(err == true){            
+          showContentDialog();
+          return false;
+        }        
+        
+        // If validation passes, show Transition content
+        showContentTransition();
+        
+
+        // Submit the form
+//        $.post("/submissions", form1Var.serialize(), function(data){
+//          confirmationVar.text(data);
+//          hideContentTransition();
+//          showConfirmation();
+//        });        
+//        return false;      
+    });    
+    
+  function hideMain(){
+    hdrMainVar.hide();
+    contentMainVar.hide();
+    ftrMainVar.hide();   
+   }
+   
+  function showMain(){
+    hdrMainVar.show();
+    contentMainVar.show();
+    ftrMainVar.show();
+   }
+   
+   function hideContentTransition(){
+    contentTransitionVar.hide();
+   }      
+   
+   function showContentTransition(){
+    contentTransitionVar.show();
+   }  
+   
+  function hideContentDialog(){
+    contentDialogVar.hide();
+   }   
+   
+   function showContentDialog(){
+    contentDialogVar.show();
+   }
+   
+   function hideConfirmation(){
+    hdrConfirmationVar.hide();
+    contentConfirmationVar.hide();
+    ftrConfirmationVar.hide();
+   }  
+   
+   function showConfirmation(){
+    hdrConfirmationVar.show();
+    contentConfirmationVar.show();
+    ftrConfirmationVar.show();
+   } 
+
+    
+  </script>
+</div> <!-- page1 -->
+
+
+<!-- Page ends here -->
+</body>
+</html>
