@@ -1,13 +1,9 @@
-<!DOCTYPE html> 
-<html> 
-	<head> 
-	<title>Submit a Word</title> 
-
+<% content_for :head do %>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
 	<link rel="stylesheet" href="/stylesheets/colors.css">
   <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
-  
+
 	<script>	 
 	 // Global declarations - assignments made in $(document).ready() below
     var hdrMainvar = null;
@@ -27,8 +23,7 @@
     var EMPTY = "";
 	</script>
 
-</head> 
-<body> 
+<% end %>
 
 <!-- Page starts here -->
 <div data-role="page" data-theme="b" id="page1">
@@ -40,8 +35,7 @@
 
 	<div data-role="content" id="contentMain" name="contentMain">	
 	
-
-    <%= form_tag "/submissions", :remote => true, :id => "form1" do %>
+    <%= form_tag "/submissions", :id => "form1" do %>
 
       <div id="idDiv" data-role="fieldcontain">
         <label for="participants">Participant IDs:*</label>		
@@ -78,9 +72,16 @@
 	
 	<div data-role="content" id="contentConfirmation" name="contentConfirmation" align="center">	
   	<p>The word <span id="confirmation" name="confirmation"></span> has been submitted to the SSE Jumble server successfully.</p>
-  	<a id="buttonBack" name="buttonBack" href="#page1" data-role="button" data-inline="true">Cool!</a>
+  	<a class="buttonBack" href="#page1" data-role="button" data-inline="true">Cool!</a>
 	</div><!-- contentConfirmation -->	
   	
+  <div data-role="content" id="failureMessage" name="failureMessage" align="center">	
+    <p>The following errors occurred during submission:</p>
+    <p id="errors" name="errors">
+    </p>
+  	<a class="buttonBack" href="#page1" data-role="button" data-inline="true">Uh oh!</a>
+	</div><!-- contentConfirmation -->	
+
 	<div data-role="footer" id="ftrConfirmation" name="ftrConfirmation"></div> 
 	
 	
@@ -97,6 +98,8 @@
       contentDialogVar = $('#contentDialog');
       hdrConfirmationVar = $('#hdrConfirmation');
       contentConfirmationVar = $('#contentConfirmation');
+      failureMessageVar = $('#failureMessage');
+      errorsVar = $('#errors');
       ftrConfirmationVar = $('#ftrConfirmation'); 
       inputMapVar = $('input[name*="_r"]');
       
@@ -111,7 +114,7 @@
       return false;      
     });
     
-    $('#buttonBack').click(function() {
+    $('.buttonBack').click(function() {
       hideContentDialog();
       hideContentTransition();
       hideConfirmation();
@@ -150,12 +153,27 @@
         
 
         // Submit the form
-//        $.post("/submissions", form1Var.serialize(), function(data){
-//          confirmationVar.text(data);
-//          hideContentTransition();
-//          showConfirmation();
-//        });        
-//        return false;      
+        $.post("/submissions", form1Var.serialize(), function(data) {
+          console.log(data);
+
+          if (data.status == "INVALID") {
+            errorString = "";
+
+            for (k in data.errors) {
+              errorString += k + " " + data.errors[k] + "<br />";
+            }
+
+            errorsVar.html(errorString);
+            hideContentTransition();
+            showFailure();
+          } else {
+            confirmationVar.text(data.word);
+            hideContentTransition();
+            showConfirmation();
+          }
+
+        });
+        return false;
     });    
     
   function hideMain(){
@@ -189,6 +207,7 @@
    function hideConfirmation(){
     hdrConfirmationVar.hide();
     contentConfirmationVar.hide();
+    failureMessageVar.hide();
     ftrConfirmationVar.hide();
    }  
    
@@ -198,11 +217,13 @@
     ftrConfirmationVar.show();
    } 
 
+   function showFailure() {
+     hdrConfirmationVar.show();
+     failureMessageVar.show();
+     ftrConfirmationVar.show();
+   }
+
     
   </script>
 </div> <!-- page1 -->
 
-
-<!-- Page ends here -->
-</body>
-</html>

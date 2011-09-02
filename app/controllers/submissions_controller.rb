@@ -43,16 +43,29 @@ class SubmissionsController < ApplicationController
     @submission = Submission.new
     @submission.magic_string = params[:participants]
 
+    resp_data = {
+      :status => "VALID",
+      :errors => [],
+      :word => ""
+    }
+
     if @submission.save
       # format.html { redirect_to(@submission, :notice => 'Submission was successfully created.') }
       # format.js  { render :json => @submission, :status => :created, :location => @submission }
-      render :text => "Valid", :status => 200
+      # render :text => "Valid", :status => 200
+
+      resp_data[:word] = @submission.word.word
     else
       # format.html { render :action => "new" }
       # format.js  { render :json => @submission.errors, :status => :unprocessable_entity }
+      # render :text => "Invalid", :status => 500
       logger.debug "submission errors: #{@submission.errors}"
-      render :text => "Invalid", :status => 500
+
+      resp_data[:status] = "INVALID"
+      resp_data[:errors] = @submission.errors
     end
+
+    render :json => resp_data
   end
 
   # PUT /submissions/1

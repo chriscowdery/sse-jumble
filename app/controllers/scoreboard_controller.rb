@@ -1,4 +1,6 @@
 class ScoreboardController < ApplicationController
+  layout nil
+
   def index
     respond_to do |format|
       format.html
