@@ -28,5 +28,9 @@ class ScoreboardController < ApplicationController
     scores[0,7]
   end
 
+protected
+
+  def authorize!
+  end
 
 end
