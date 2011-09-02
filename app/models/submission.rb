@@ -6,7 +6,7 @@ class Submission < ActiveRecord::Base
   validates_uniqueness_of :magic_string
 
   before_validation :set_word_and_people
-  after_save :validate_no_group_trickery
+  before_save :validate_no_group_trickery
 
 private
 
@@ -14,6 +14,7 @@ private
     temp_people = []
     temp_word = ""
     temp_magic_string = magic_string.dup
+
     until temp_magic_string.length == 0
       temp_people << Person.find(temp_magic_string.slice!(0..1).to_i)
       temp_word << temp_people.last.letter
@@ -25,6 +26,9 @@ private
 
   def validate_no_group_trickery
     submissions = Submission.where(:word_id => self.word_id)
+
+    logger.debug "submissions: #{submissions.to_a}"
+
     submissions.each do |s|
       if s.people.sort_by { |p| p.id } == self.people.sort_by { |p| p.id }
         self.errors[:base] << "Word has already been submitted by this group."

@@ -43,16 +43,15 @@ class SubmissionsController < ApplicationController
     @submission = Submission.new
     @submission.magic_string = params[:participants]
 
-    respond_to do |format|
-      if @submission.save
-        # format.html { redirect_to(@submission, :notice => 'Submission was successfully created.') }
-        # format.js  { render :json => @submission, :status => :created, :location => @submission }
-        render :text => "Valid", :status => 200
-      else
-        # format.html { render :action => "new" }
-        # format.js  { render :json => @submission.errors, :status => :unprocessable_entity }
-        render :text => "Invalid", :status => 500
-      end
+    if @submission.save
+      # format.html { redirect_to(@submission, :notice => 'Submission was successfully created.') }
+      # format.js  { render :json => @submission, :status => :created, :location => @submission }
+      render :text => "Valid", :status => 200
+    else
+      # format.html { render :action => "new" }
+      # format.js  { render :json => @submission.errors, :status => :unprocessable_entity }
+      logger.debug "submission errors: #{@submission.errors}"
+      render :text => "Invalid", :status => 500
     end
   end
 
