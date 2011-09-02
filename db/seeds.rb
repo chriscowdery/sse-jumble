@@ -31,9 +31,13 @@ if Person.count == 0
     end
   end
 
-  letters = get_letter_array(linecount)
+  # letters = get_letter_array(linecount)
 
   lines.each do |line|
+    letter = line[0].downcase
+
+    line = line[2..line.length]
+
     first_name = line.match(/, (.+)/).captures[0]
     last_name = line.match(/(.+),/).captures[0]
 
@@ -48,7 +52,7 @@ if Person.count == 0
     # 8 points: J ×1, X ×1
     # 10 points: Q ×1, Z ×1
 
-    letter = letters.pop()
+    # letter = letters.pop()
 
     p = Person.create(:first_name => first_name, :last_name => last_name, :letter => letter)
   end
