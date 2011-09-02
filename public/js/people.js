@@ -99,18 +99,21 @@ function instantResize(index){
 //-----------------------------------------------------------
 
 $(document).ready(function(){
-	//getAjax();
+	getAjax();
 });
 
 function getAjax(){
 	$.ajax({
-		url: '/top10',
+		url: '/scoreboard/index.json',
 		success:function(data){
 			handleData(data);
 		},
 		complete:function(){
 			setTimeout(function(){getAjax()},refreshTime);
-		}
+		},
+    error:function(){
+      alert('error');
+    }
 	});
 
 }
@@ -121,14 +124,14 @@ function handleData(data){
 	if(first){
 		//removeAll();
 	}
-	$(data.people).each(function(index, person){
+	$(data).each(function(index, person){
 		if(first){
-			setPerson(index,person.name,person.points,false);
+			setPerson(index,person.name,person.score,false);
 		}
 		else{
 			prev = previousData.people[index];
-			if(prev.name != person.name || prev.points != person.points){
-				changePerson(index, person.name,person.points);
+			if(prev.name != person.name || prev.score != person.score){
+				changePerson(index, person.name,person.score);
 			}
 		}
 	});
