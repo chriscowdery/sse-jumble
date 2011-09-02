@@ -118,9 +118,10 @@ function getAjax(){
 
 }
 
-var previousData;
+var previousData = null;
 function handleData(data){
 	var first = previousData == null;
+    console.log(first);
 	if(first){
 		//removeAll();
 	}
@@ -129,7 +130,7 @@ function handleData(data){
 			setPerson(index,person.name,person.score,false);
 		}
 		else{
-			prev = previousData.people[index];
+			prev = previousData[index];
 			if(prev.name != person.name || prev.score != person.score){
 				changePerson(index, person.name,person.score);
 			}
@@ -142,4 +143,5 @@ function handleData(data){
 	}
 
 	previousData = data;
+    console.log(previousData);
 }
